@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Linked Player</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-zinc-950 via-neutral-900 to-violet-950 text-zinc-100 antialiased">
+  <div class="mx-auto grid max-w-7xl gap-6 p-4 lg:grid-cols-3 lg:p-8">
+    <header class="flex items-center justify-between lg:col-span-3">
+      <h1 class="text-2xl font-bold tracking-tight">Linked<span class="text-violet-400">Player</span></h1>
+      <button id="clear-btn" class="rounded-full border border-white/10 px-4 py-1.5 text-sm text-zinc-300 hover:bg-white/10">Clear playlist</button>
+    </header>
+
+    <section class="space-y-5 lg:col-span-2">
+      <div class="aspect-video overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-white/10"><div id="yt-player"></div></div>
+      <div id="now-playing"></div>
+      <div class="flex items-center justify-center gap-4">
+        <button id="prev-btn" class="h-12 w-12 rounded-full bg-white/10 text-sm hover:bg-white/20" title="Previous (node.prev)">◀◀</button>
+        <button id="play-btn" class="h-16 w-16 rounded-full bg-violet-500 text-lg font-bold shadow-lg shadow-violet-500/30 hover:bg-violet-400">▶</button>
+        <button id="next-btn" class="h-12 w-12 rounded-full bg-white/10 text-sm hover:bg-white/20" title="Next (node.next)">▶▶</button>
+      </div>
+      <div id="pointers" class="grid grid-cols-3 gap-3"></div>
+      <div>
+        <h2 class="mb-2 text-xs font-semibold uppercase tracking-widest text-zinc-400">Linked list</h2>
+        <div id="chain" class="overflow-x-auto rounded-2xl bg-white/5 p-4 ring-1 ring-white/10"></div>
+      </div>
+    </section>
+
+    <aside class="space-y-5">
+      <form id="search-form" class="flex gap-2">
+        <input id="search-input" placeholder="Search YouTube…" class="min-w-0 flex-1 rounded-full bg-white/10 px-4 py-2 text-sm outline-none ring-1 ring-white/10 focus:ring-violet-400" />
+        <button class="rounded-full bg-violet-500 px-4 text-sm font-medium hover:bg-violet-400">Search</button>
+      </form>
+      <div id="results" class="max-h-72 space-y-2 overflow-y-auto"></div>
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">Queue <span id="size"></span></h2>
+          <input id="filter-input" placeholder="Filter list…" class="w-32 rounded-full bg-white/10 px-3 py-1 text-xs outline-none" />
+        </div>
+        <ul id="queue" class="max-h-96 space-y-1 overflow-y-auto"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4">
+    <form id="modal-form" class="w-full max-w-sm space-y-4 rounded-2xl bg-zinc-900 p-6 ring-1 ring-white/10">
+      <h3 class="font-semibold">Add to playlist</h3>
+      <p id="modal-title" class="truncate text-sm text-zinc-400"></p>
+      <select id="modal-pos" class="w-full rounded-lg bg-zinc-800 p-2 text-sm">
+        <option value="start">At the start (prepend)</option>
+        <option value="end" selected>At the end (append)</option>
+        <option value="index">At index (insertAt)</option>
+      </select>
+      <input id="modal-index" type="number" min="0" value="0" class="hidden w-full rounded-lg bg-zinc-800 p-2 text-sm" />
+      <div class="flex justify-end gap-2">
+        <button type="button" id="modal-cancel" class="rounded-full px-4 py-1.5 text-sm hover:bg-white/10">Cancel</button>
+        <button class="rounded-full bg-violet-500 px-4 py-1.5 text-sm font-medium hover:bg-violet-400">Add</button>
+      </div>
+    </form>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
